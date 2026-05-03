@@ -3,10 +3,20 @@
   "paypalEmail": "jingm1658@gmail.com",
   "currency": "USD",
   "theme": {
-    "primary": "#9C8B7A",
+    "primary": "#2C2C2C",
+    "accent": "#9C8B7A",
     "secondary": "#D4C5B5",
-    "accent": "#4A4A4A",
     "background": "#FAF8F5",
-    "text": "#2C2C2C"
-  }
+    "text": "#1a1a1a"
+  },
+  "shipping": {
+    "freeThreshold": 50,
+    "freeLabel": "Free (5-8 business days)",
+    "methods": [
+      { "name": "Standard Shipping", "price": 5.99 },
+      { "name": "Priority Shipping", "price": 12.99 },
+      { "name": "Express Shipping", "price": 24.99 }
+    ]
+  },
+  "coupons": []
 }

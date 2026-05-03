@@ -1,358 +1,563 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Studio Daily — Admin</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --primary: #9C8B7A;
-      --primary-dark: #7D6F62;
-      --secondary: #D4C5B5;
-      --accent: #4A4A4A;
-      --bg: #FAF8F5;
-      --card: #FFFFFF;
-      --text: #2C2C2C;
-      --text-light: #6B6B6B;
-      --border: #E8E2D9;
-      --danger: #C44A4A;
-      --success: #5B8C5A;
-      --sidebar: #2C2C2C;
-      --sidebar-text: #E8E2D9;
-      --radius: 10px;
-    }
-    html, body { height: 100%; font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); }
-    /* Login */
-    #loginScreen {
-      position: fixed; inset: 0; background: var(--bg); display: flex;
-      align-items: center; justify-content: center; z-index: 1000;
-    }
-    .login-card {
-      background: var(--card); padding: 48px 40px; border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.08); width: 360px; max-width: 90vw;
-    }
-    .login-card h1 { font-size: 24px; font-weight: 600; letter-spacing: 1px; margin-bottom: 4px; }
-    .login-card p { color: var(--text-light); font-size: 14px; margin-bottom: 28px; }
-    .login-card input {
-      width: 100%; padding: 14px 16px; border: 1px solid var(--border);
-      border-radius: 8px; font-size: 15px; background: var(--bg); margin-bottom: 16px;
-    }
-    .login-card input:focus { outline: none; border-color: var(--primary); }
-    .login-card button {
-      width: 100%; padding: 14px; background: var(--primary); color: white;
-      border: none; border-radius: 8px; font-size: 15px; font-weight: 500; cursor: pointer;
-      transition: background 0.2s;
-    }
-    .login-card button:hover { background: var(--primary-dark); }
-    .login-error { color: var(--danger); font-size: 13px; margin-top: 12px; text-align: center; display: none; }
-    /* Layout */
-    #app { display: flex; height: 100vh; }
-    .sidebar {
-      width: 240px; background: var(--sidebar); color: var(--sidebar-text);
-      display: flex; flex-direction: column; flex-shrink: 0;
-    }
-    .sidebar-brand {
-      padding: 28px 24px; font-size: 14px; font-weight: 600; letter-spacing: 2px;
-      text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .sidebar-nav { flex: 1; padding: 16px 0; }
-    .sidebar-nav a {
-      display: flex; align-items: center; gap: 12px; padding: 12px 24px;
-      color: var(--sidebar-text); text-decoration: none; font-size: 14px;
-      transition: all 0.15s; cursor: pointer; border: none; background: none; width: 100%;
-      text-align: left;
-    }
-    .sidebar-nav a:hover, .sidebar-nav a.active { background: rgba(255,255,255,0.06); color: white; }
-    .sidebar-nav a.active { border-left: 3px solid var(--secondary); padding-left: 21px; }
-    .sidebar-nav .icon { font-size: 18px; width: 22px; text-align: center; }
-    .main {
-      flex: 1; display: flex; flex-direction: column; overflow: hidden;
-    }
-    .main-header {
-      padding: 20px 32px; background: var(--card); border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .main-header h2 { font-size: 20px; font-weight: 600; }
-    .main-header .user-badge {
-      display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-light);
-    }
-    .main-header .user-badge button {
-      padding: 6px 14px; background: none; border: 1px solid var(--border);
-      border-radius: 6px; cursor: pointer; font-size: 13px; color: var(--text-light);
-      transition: all 0.15s;
-    }
-    .main-header .user-badge button:hover { border-color: var(--danger); color: var(--danger); }
-    .main-content {
-      flex: 1; padding: 32px; overflow-y: auto;
-    }
-    .page { display: none; }
-    .page.active { display: block; }
-    /* Cards */
-    .card {
-      background: var(--card); border-radius: var(--radius); border: 1px solid var(--border);
-      padding: 24px; margin-bottom: 20px;
-    }
-    .card-header {
-      display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;
-    }
-    .card-header h3 { font-size: 16px; font-weight: 600; }
-    /* Buttons */
-    .btn {
-      display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px;
-      border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer;
-      border: none; transition: all 0.15s;
-    }
-    .btn-primary { background: var(--primary); color: white; }
-    .btn-primary:hover { background: var(--primary-dark); }
-    .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
-    .btn-secondary:hover { border-color: var(--primary); }
-    .btn-danger { background: var(--danger); color: white; }
-    .btn-danger:hover { background: #A83D3D; }
-    .btn-sm { padding: 6px 12px; font-size: 12px; }
-    /* Table */
-    .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    th { text-align: left; padding: 12px 16px; border-bottom: 2px solid var(--border); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-light); }
-    td { padding: 12px 16px; border-bottom: 1px solid var(--border); }
-    tr:hover td { background: #F7F5F2; }
-    .status-badge {
-      display: inline-block; padding: 3px 10px; border-radius: 20px;
-      font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px;
-    }
-    .status-paid { background: #E1F0E1; color: #3A7D3A; }
-    .status-pending { background: #FFF1E0; color: #B87A30; }
-    .status-shipped { background: #E0E8F5; color: #3A6A9A; }
-    /* Product grid in admin */
-    .product-grid-admin {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;
-    }
-    .product-card-admin {
-      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-      overflow: hidden; transition: box-shadow 0.15s;
-    }
-    .product-card-admin:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
-    .product-card-admin img { width: 100%; height: 180px; object-fit: cover; }
-    .product-card-admin .info { padding: 16px; }
-    .product-card-admin .info h4 { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
-    .product-card-admin .info .price { font-size: 15px; font-weight: 600; color: var(--primary); }
-    .product-card-admin .info .meta { font-size: 12px; color: var(--text-light); margin: 4px 0 12px; }
-    .product-card-admin .actions { display: flex; gap: 8px; padding: 0 16px 16px; }
-    /* Modal */
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.4); 
-      display: flex; align-items: center; justify-content: center; z-index: 2000;
-      opacity: 0; pointer-events: none; transition: opacity 0.2s;
-    }
-    .modal-overlay.show { opacity: 1; pointer-events: all; }
-    .modal {
-      background: var(--card); border-radius: 16px; padding: 32px;
-      width: 600px; max-width: 92vw; max-height: 85vh; overflow-y: auto;
-      box-shadow: 0 16px 48px rgba(0,0,0,0.15);
-    }
-    .modal h3 { font-size: 18px; margin-bottom: 20px; }
-    .modal .form-row { margin-bottom: 16px; }
-    .modal label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--text-light); }
-    .modal input, .modal textarea, .modal select {
-      width: 100%; padding: 10px 14px; border: 1px solid var(--border);
-      border-radius: 8px; font-size: 14px; background: var(--bg); font-family: inherit;
-    }
-    .modal input:focus, .modal textarea:focus, .modal select:focus { outline: none; border-color: var(--primary); }
-    .modal textarea { min-height: 80px; resize: vertical; }
-    .modal .form-row-inline { display: flex; gap: 12px; }
-    .modal .form-row-inline > * { flex: 1; }
-    .modal .modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
-    /* Settings */
-    .settings-group { margin-bottom: 28px; }
-    .settings-group h4 { font-size: 14px; font-weight: 600; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
-    /* Stats row */
-    .stats-row {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px;
-    }
-    .stat-card {
-      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 20px; text-align: center;
-    }
-    .stat-card .num { font-size: 28px; font-weight: 700; color: var(--primary); }
-    .stat-card .label { font-size: 12px; color: var(--text-light); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
-    /* Toast */
-    .toast {
-      position: fixed; bottom: 24px; right: 24px; background: var(--text); color: white;
-      padding: 14px 24px; border-radius: 8px; font-size: 13px; z-index: 9999;
-      opacity: 0; transform: translateY(12px); transition: all 0.3s;
-    }
-    .toast.show { opacity: 1; transform: translateY(0); }
-    .toast.success { background: var(--success); }
-    .toast.error { background: var(--danger); }
-    /* Responsive */
-    @media (max-width: 768px) {
-      .sidebar { width: 60px; }
-      .sidebar-brand { padding: 20px 12px; font-size: 10px; letter-spacing: 1px; overflow: hidden; }
-      .sidebar-nav a { padding: 12px 18px; justify-content: center; }
-      .sidebar-nav a span:not(.icon) { display: none; }
-      .sidebar-nav a.active { border-left: none; border-bottom: 2px solid var(--secondary); padding-left: 18px; }
-      .main-header { padding: 16px; }
-      .main-content { padding: 16px; }
-      .product-grid-admin { grid-template-columns: 1fr; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STUDIO DAILY — Admin</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f5f5;color:#1a1a1a}
+:root{--primary:#2C2C2C;--primary-hover:#444;--accent:#9C8B7A;--bg:#FAF8F5;--text:#1a1a1a;--text-light:#888;--border:#e0e0e0;--success:#2e7d32;--warning:#f57c00;--danger:#c62828;--info:#1565c0}
+
+/* LOGIN */
+#loginScreen{display:flex;align-items:center;justify-content:center;height:100vh;background:var(--bg)}
+.login-box{background:#fff;padding:48px 40px;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.06);width:360px;max-width:90vw}
+.login-box h1{font-size:20px;font-weight:600;letter-spacing:1px;margin-bottom:4px;text-transform:uppercase}
+.login-box p{font-size:13px;color:var(--text-light);margin-bottom:24px}
+.login-box input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;font-size:14px;margin-bottom:12px;outline:none}
+.login-box input:focus{border-color:var(--primary)}
+.login-box button{width:100%;padding:12px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer}
+.login-box button:hover{background:var(--primary-hover)}
+.login-error{color:var(--danger);font-size:13px;display:none;margin-top:8px;text-align:center}
+
+/* LAYOUT */
+#app{display:none;height:100vh}
+.sidebar{width:240px;background:#fff;border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100}
+.sidebar-header{padding:20px 24px;border-bottom:1px solid var(--border)}
+.sidebar-header h2{font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--primary)}
+.sidebar-header p{font-size:11px;color:var(--text-light);margin-top:2px}
+.sidebar-nav{padding:12px 0;flex:1}
+.sidebar-nav a{display:flex;align-items:center;gap:10px;padding:10px 24px;font-size:13px;color:var(--text);text-decoration:none;transition:all .15s;cursor:pointer;border-left:3px solid transparent}
+.sidebar-nav a:hover{background:#f8f8f8}
+.sidebar-nav a.active{background:#f0f0f0;border-left-color:var(--primary);font-weight:600}
+.sidebar-nav a .icon{font-size:16px;width:20px;text-align:center}
+.sidebar-footer{padding:16px 24px;border-top:1px solid var(--border);font-size:12px}
+.sidebar-footer a{color:var(--text-light);text-decoration:none;cursor:pointer;display:flex;align-items:center;gap:6px}
+.sidebar-footer a:hover{color:var(--text)}
+
+.main{margin-left:240px;flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;background:#fff;border-bottom:1px solid var(--border)}
+.topbar h1{font-size:18px;font-weight:600}
+.topbar-right{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-light)}
+.content{flex:1;overflow-y:auto;padding:24px 32px}
+
+/* PAGES */
+.page{display:none}
+.page.active{display:block}
+
+/* CARDS */
+.card{background:#fff;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.04);padding:20px 24px;margin-bottom:20px}
+.card-title{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-light);margin-bottom:16px}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{background:#fff;border-radius:10px;padding:20px 24px;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.stat-card .stat-value{font-size:28px;font-weight:700;margin-bottom:2px}
+.stat-card .stat-label{font-size:12px;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px}
+.stat-card .stat-change{font-size:12px;margin-top:4px}
+.stat-card .stat-change.up{color:var(--success)}
+.stat-card .stat-change.down{color:var(--danger)}
+
+/* CHARTS */
+.chart-container{max-width:100%;height:260px;margin-bottom:16px}
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:900px){.charts-row{grid-template-columns:1fr}}
+
+/* TABLES */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 12px;font-weight:600;color:var(--text-light);text-transform:uppercase;font-size:11px;letter-spacing:.5px;border-bottom:2px solid var(--border)}
+td{padding:10px 12px;border-bottom:1px solid var(--border)}
+tr:hover td{background:#fafafa}
+
+/* BADGES */
+.badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;display:inline-block}
+.badge-pending{background:#fff3e0;color:#e65100}
+.badge-processing{background:#e3f2fd;color:#1565c0}
+.badge-shipped{background:#f3e5f5;color:#6a1b9a}
+.badge-delivered{background:#e8f5e9;color:#2e7d32}
+.badge-cancelled{background:#ffebee;color:#c62828}
+
+/* BUTTONS */
+.btn{padding:8px 16px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-hover)}
+.btn-secondary{background:#f0f0f0;color:var(--text)}
+.btn-secondary:hover{background:#e0e0e0}
+.btn-success{background:var(--success);color:#fff}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-sm{padding:5px 10px;font-size:12px}
+.btn-icon{background:transparent;border:1px solid var(--border);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:14px}
+.btn-icon:hover{background:#f5f5f5}
+
+/* FORMS */
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:12px;font-weight:600;margin-bottom:4px;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;font-size:14px;outline:none;font-family:inherit}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary)}
+.form-group textarea{resize:vertical;min-height:80px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:12px;width:600px;max-width:94vw;max-height:90vh;overflow-y:auto;padding:28px 32px;box-shadow:0 12px 48px rgba(0,0,0,0.12)}
+.modal h3{font-size:16px;font-weight:600;margin-bottom:20px}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+
+/* PRODUCT GRID */
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.product-card-admin{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.04);border:1px solid var(--border)}
+.product-card-admin img{width:100%;height:200px;object-fit:cover}
+.product-card-admin .info{padding:12px 16px}
+.product-card-admin .info h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.product-card-admin .info .price{font-size:15px;font-weight:700;color:var(--primary)}
+.product-card-admin .info .meta{font-size:11px;color:var(--text-light);margin-top:2px}
+.product-card-admin .actions{display:flex;gap:6px;padding:8px 16px 12px}
+
+/* SEARCH & FILTER */
+.toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.search-input{padding:8px 14px;border:1px solid var(--border);border-radius:6px;font-size:13px;width:280px;max-width:100%;outline:none}
+.search-input:focus{border-color:var(--primary)}
+
+/* ORDER DETAIL */
+.order-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:700px){.order-detail-grid{grid-template-columns:1fr}}
+.detail-section h4{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-light);margin-bottom:8px}
+.detail-section p{font-size:14px;margin-bottom:4px}
+.detail-items{margin-top:12px}
+.detail-items .item{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid var(--border)}
+.detail-items .item:last-child{border-bottom:none}
+.order-total{display:flex;justify-content:space-between;padding:12px 0 0;margin-top:8px;border-top:2px solid var(--primary);font-weight:700;font-size:16px}
+
+/* SETTINGS */
+.settings-section{margin-bottom:24px}
+.settings-section h3{font-size:14px;font-weight:600;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.color-picker-row{display:flex;align-items:center;gap:12px}
+.color-picker-row input[type="color"]{width:40px;height:40px;border:none;border-radius:6px;cursor:pointer;padding:0}
+.color-picker-row span{font-size:13px}
+
+/* COUPON */
+.coupon-code{font-family:monospace;font-size:18px;font-weight:700;letter-spacing:2px;padding:8px 12px;background:#f8f8f8;border-radius:6px;display:inline-block}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;padding:12px 20px;background:var(--primary);color:#fff;border-radius:8px;font-size:13px;z-index:2000;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.error{background:var(--danger)}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:48px 20px;color:var(--text-light)}
+.empty-state p{font-size:14px}
+</style>
 </head>
 <body>
-  <!-- Login Screen -->
-  <div id="loginScreen">
-    <div class="login-card">
-      <h1>STUDIO DAILY</h1>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <h1>STUDIO DAILY</h1>
+    <p>Admin Panel</p>
+    <input type="password" id="loginPassword" placeholder="Password" onkeydown="if(event.key==='Enter')login()" autofocus>
+    <button onclick="login()">Sign In</button>
+    <div class="login-error" id="loginError">Incorrect password</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>Studio Daily</h2>
       <p>Admin Panel</p>
-      <input type="password" id="loginPassword" placeholder="Enter password" />
-      <button onclick="login()">Sign In</button>
-      <p class="login-error" id="loginError">Incorrect password</p>
+    </div>
+    <div class="sidebar-nav">
+      <a class="active" data-page="dashboard" onclick="showPage('dashboard')"><span class="icon">📊</span> Dashboard</a>
+      <a data-page="orders" onclick="showPage('orders')"><span class="icon">📦</span> Orders</a>
+      <a data-page="products" onclick="showPage('products')"><span class="icon">👗</span> Products</a>
+      <a data-page="customers" onclick="showPage('customers')"><span class="icon">👤</span> Customers</a>
+      <a data-page="discounts" onclick="showPage('discounts')"><span class="icon">🏷️</span> Discounts</a>
+      <a data-page="shipping" onclick="showPage('shipping')"><span class="icon">🚚</span> Shipping</a>
+      <a data-page="settings" onclick="showPage('settings')"><span class="icon">⚙️</span> Settings</a>
+    </div>
+    <div class="sidebar-footer">
+      <a onclick="logout()">🚪 Sign Out</a>
     </div>
   </div>
 
-  <!-- Toast -->
-  <div class="toast" id="toast"></div>
-
-  <!-- App -->
-  <div id="app" style="display:none;">
-    <nav class="sidebar">
-      <div class="sidebar-brand">Studio Daily</div>
-      <div class="sidebar-nav">
-        <a class="active" onclick="showPage('dashboard')" data-page="dashboard">
-          <span class="icon">📊</span><span>Dashboard</span>
-        </a>
-        <a onclick="showPage('products')" data-page="products">
-          <span class="icon">👗</span><span>Products</span>
-        </a>
-        <a onclick="showPage('orders')" data-page="orders">
-          <span class="icon">📦</span><span>Orders</span>
-        </a>
-        <a onclick="showPage('customers')" data-page="customers">
-          <span class="icon">👤</span><span>Customers</span>
-        </a>
-        <a onclick="showPage('settings')" data-page="settings">
-          <span class="icon">⚙️</span><span>Settings</span>
-        </a>
-      </div>
-    </nav>
-
-    <div class="main">
-      <div class="main-header">
-        <h2 id="pageTitle">Dashboard</h2>
-        <div class="user-badge">
-          <span>Admin</span>
-          <button onclick="logout()">Sign Out</button>
-        </div>
-      </div>
-
-      <div class="main-content">
-
-        <!-- Dashboard -->
-        <div class="page active" id="page-dashboard">
-          <div class="stats-row" id="statsRow"></div>
-          <div class="card">
-            <div class="card-header"><h3>Recent Orders</h3></div>
-            <div class="table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th></tr></thead><tbody id="recentOrders"></tbody></table></div>
-          </div>
-        </div>
-
-        <!-- Products -->
-        <div class="page" id="page-products">
-          <div class="card">
-            <div class="card-header">
-              <h3>All Products <span id="productCount" style="font-weight:400;color:var(--text-light);font-size:13px;"></span></h3>
-              <button class="btn btn-primary" onclick="openProductModal()">+ Add Product</button>
-            </div>
-            <div class="product-grid-admin" id="productGrid"></div>
-          </div>
-        </div>
-
-        <!-- Orders -->
-        <div class="page" id="page-orders">
-          <div class="card">
-            <div class="card-header"><h3>All Orders</h3></div>
-            <div class="table-wrap"><table><thead><tr><th>Order #</th><th>Customer</th><th>Email</th><th>Items</th><th>Total</th><th>Status</th><th>Date</th><th>Action</th></tr></thead><tbody id="ordersList"></tbody></table></div>
-          </div>
-        </div>
-
-        <!-- Customers -->
-        <div class="page" id="page-customers">
-          <div class="card">
-            <div class="card-header"><h3>Customers</h3></div>
-            <div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Orders</th><th>Total Spent</th><th>First Order</th></tr></thead><tbody id="customersList"></tbody></table></div>
-          </div>
-        </div>
-
-        <!-- Settings -->
-        <div class="page" id="page-settings">
-          <div class="card">
-            <div class="card-header"><h3>Store Settings</h3></div>
-            <div class="settings-group">
-              <h4>General</h4>
-              <div class="form-row"><label>Store Name</label><input type="text" id="setStoreName" /></div>
-              <div class="form-row"><label>PayPal Email</label><input type="email" id="setPaypalEmail" /></div>
-              <div class="form-row"><label>Currency</label><input type="text" id="setCurrency" value="USD" disabled style="background:#f0ede8;" /></div>
-            </div>
-            <div class="settings-group">
-              <h4>Theme Colors</h4>
-              <div class="form-row-inline">
-                <div class="form-row"><label>Primary</label><input type="color" id="setPrimary" /></div>
-                <div class="form-row"><label>Background</label><input type="color" id="setBg" /></div>
-                <div class="form-row"><label>Text</label><input type="text" id="setText" /></div>
-              </div>
-            </div>
-            <div class="settings-group">
-              <h4>Admin Password</h4>
-              <div class="form-row-inline">
-                <div class="form-row"><label>Current Password</label><input type="password" id="passCurrent" /></div>
-                <div class="form-row"><label>New Password</label><input type="password" id="passNew" /></div>
-              </div>
-            </div>
-            <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
-          </div>
-        </div>
-
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <h1 id="pageTitle">Dashboard</h1>
+      <div class="topbar-right">
+        <span id="storeUrlDisplay"><a href="https://wutian849-afk.github.io/studiodaily/store/" target="_blank" style="color:var(--accent);text-decoration:none">View Store ↗</a></span>
       </div>
     </div>
-  </div>
 
-  <!-- Product Modal -->
-  <div class="modal-overlay" id="productModal">
-    <div class="modal">
-      <h3 id="modalTitle">Add Product</h3>
-      <input type="hidden" id="prodId" />
-      <div class="form-row"><label>Product Name</label><input type="text" id="prodName" /></div>
-      <div class="form-row"><label>Description</label><textarea id="prodDesc"></textarea></div>
-      <div class="form-row-inline">
-        <div class="form-row"><label>Price ($)</label><input type="number" step="0.01" id="prodPrice" /></div>
-        <div class="form-row"><label>Category</label><select id="prodCategory"><option>Dresses</option><option>Tops</option><option>Bottoms</option><option>Outerwear</option><option>Accessories</option></select></div>
+    <div class="content">
+
+      <!-- ========== DASHBOARD ========== -->
+      <div class="page active" id="page-dashboard">
+        <div class="stats-grid" id="statsGrid"></div>
+        <div class="charts-row">
+          <div class="card">
+            <div class="card-title">Revenue (Last 7 Days)</div>
+            <div class="chart-container"><canvas id="revenueChart"></canvas></div>
+          </div>
+          <div class="card">
+            <div class="card-title">Top Selling Products</div>
+            <div id="topProductsList"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Recent Orders</div>
+          <div id="recentOrdersTable"></div>
+        </div>
       </div>
-      <div class="form-row"><label>Image URL</label><input type="url" id="prodImage" placeholder="https://images.unsplash.com/..." /></div>
-      <div class="form-row-inline">
-        <div class="form-row"><label>Sizes (comma-separated)</label><input type="text" id="prodSizes" placeholder="XS, S, M, L, XL" /></div>
-        <div class="form-row"><label>Colors (comma-separated)</label><input type="text" id="prodColors" placeholder="Black, White, Navy" /></div>
+
+      <!-- ========== ORDERS ========== -->
+      <div class="page" id="page-orders">
+        <div class="toolbar">
+          <div>
+            <select id="orderStatusFilter" onchange="renderOrders()" style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px">
+              <option value="all">All Orders</option>
+              <option value="pending">Pending</option>
+              <option value="processing">Processing</option>
+              <option value="shipped">Shipped</option>
+              <option value="delivered">Delivered</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+          <button class="btn btn-secondary" onclick="renderOrders()">🔄 Refresh</button>
+        </div>
+        <div class="card">
+          <table>
+            <thead><tr><th>Order #</th><th>Customer</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th><th>Date</th><th></th></tr></thead>
+            <tbody id="ordersTableBody"></tbody>
+          </table>
+        </div>
       </div>
-      <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="closeModal('productModal')">Cancel</button>
-        <button class="btn btn-primary" onclick="saveProduct()">Save Product</button>
+
+      <!-- ========== PRODUCTS ========== -->
+      <div class="page" id="page-products">
+        <div class="toolbar">
+          <input type="text" class="search-input" id="productSearch" placeholder="Search products..." oninput="renderProducts()">
+          <button class="btn btn-primary" onclick="openProductModal(null)">+ Add Product</button>
+        </div>
+        <div class="product-grid" id="productGrid"></div>
       </div>
+
+      <!-- ========== CUSTOMERS ========== -->
+      <div class="page" id="page-customers">
+        <div class="toolbar">
+          <input type="text" class="search-input" id="customerSearch" placeholder="Search customers..." oninput="renderCustomers()">
+        </div>
+        <div class="card">
+          <table>
+            <thead><tr><th>Name</th><th>Email</th><th>Orders</th><th>Total Spent</th><th>Last Order</th><th>Date Added</th></tr></thead>
+            <tbody id="customersTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ========== DISCOUNTS ========== -->
+      <div class="page" id="page-discounts">
+        <div class="toolbar">
+          <button class="btn btn-primary" onclick="openCouponModal()">+ Generate Coupon</button>
+        </div>
+        <div class="card">
+          <table>
+            <thead><tr><th>Code</th><th>Type</th><th>Value</th><th>Min Order</th><th>Used</th><th>Max Uses</th><th>Expires</th><th>Status</th><th></th></tr></thead>
+            <tbody id="couponsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ========== SHIPPING ========== -->
+      <div class="page" id="page-shipping">
+        <div class="card">
+          <div class="card-title">Shipping Methods & Rates</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Free Shipping Threshold ($)</label>
+              <input type="number" id="shipFreeThreshold" placeholder="50" step="5">
+            </div>
+            <div class="form-group">
+              <label>Free Shipping Label</label>
+              <input type="text" id="shipFreeLabel" value="Free (5-8 business days)">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Standard Shipping Name</label>
+              <input type="text" id="shipStandardName" value="Standard Shipping">
+            </div>
+            <div class="form-group">
+              <label>Standard Shipping Price ($)</label>
+              <input type="number" id="shipStandardPrice" value="5.99" step="0.5">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Priority Shipping Name</label>
+              <input type="text" id="shipPriorityName" value="Priority Shipping">
+            </div>
+            <div class="form-group">
+              <label>Priority Shipping Price ($)</label>
+              <input type="number" id="shipPriorityPrice" value="12.99" step="0.5">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Express Shipping Name</label>
+              <input type="text" id="shipExpressName" value="Express Shipping">
+            </div>
+            <div class="form-group">
+              <label>Express Shipping Price ($)</label>
+              <input type="number" id="shipExpressPrice" value="24.99" step="0.5">
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="saveShipping()">Save Shipping Settings</button>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Current Shipping Rules</div>
+          <div id="shippingRulesDisplay"></div>
+        </div>
+      </div>
+
+      <!-- ========== SETTINGS ========== -->
+      <div class="page" id="page-settings">
+        <div class="card">
+          <div class="card-title">Store Settings</div>
+          <div class="form-group">
+            <label>Store Name</label>
+            <input type="text" id="setStoreName" value="STUDIO DAILY">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>PayPal Email</label>
+              <input type="email" id="setPaypal" value="jingm1658@gmail.com">
+            </div>
+            <div class="form-group">
+              <label>Currency</label>
+              <select id="setCurrency">
+                <option value="USD">USD ($)</option>
+                <option value="EUR">EUR (€)</option>
+                <option value="GBP">GBP (£)</option>
+                <option value="CAD">CAD (C$)</option>
+                <option value="AUD">AUD (A$)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Theme</div>
+          <div class="form-row">
+            <div class="form-group color-picker-row">
+              <label>Primary</label>
+              <input type="color" id="setPrimary" value="#2C2C2C">
+              <span id="setPrimaryVal">#2C2C2C</span>
+            </div>
+            <div class="form-group color-picker-row">
+              <label>Accent</label>
+              <input type="color" id="setAccent" value="#9C8B7A">
+              <span id="setAccentVal">#9C8B7A</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group color-picker-row">
+              <label>Background</label>
+              <input type="color" id="setBg" value="#FAF8F5">
+              <span id="setBgVal">#FAF8F5</span>
+            </div>
+            <div class="form-group color-picker-row">
+              <label>Text</label>
+              <input type="color" id="setText" value="#1a1a1a">
+              <span id="setTextVal">#1a1a1a</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Change Password</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Current Password</label>
+              <input type="password" id="passCurrent" placeholder="Current password">
+            </div>
+            <div class="form-group">
+              <label>New Password</label>
+              <input type="password" id="passNew" placeholder="New password (min 4 chars)">
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="saveSettings()">💾 Save All Settings</button>
+      </div>
+
     </div>
   </div>
+</div>
 
-  <!-- Order Status Modal -->
-  <div class="modal-overlay" id="orderModal">
-    <div class="modal">
-      <h3>Update Order Status</h3>
-      <input type="hidden" id="orderEditId" />
-      <div class="form-row"><label>Order Status</label><select id="orderEditStatus"><option>pending</option><option>paid</option><option>shipped</option><option>delivered</option><option>cancelled</option></select></div>
-      <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="closeModal('orderModal')">Cancel</button>
-        <button class="btn btn-primary" onclick="updateOrderStatus()">Update</button>
+<!-- ===== MODALS ===== -->
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <h3 id="productModalTitle">Add Product</h3>
+    <div class="form-row">
+      <div class="form-group" style="grid-column:1/-1">
+        <label>Product Name</label>
+        <input type="text" id="prodName" placeholder="e.g. Cashmere Blend Wrap Dress">
       </div>
     </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea id="prodDesc" placeholder="Product description..."></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Price ($)</label>
+        <input type="number" id="prodPrice" placeholder="89.00" step="0.01">
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select id="prodCategory">
+          <option value="Dresses">Dresses</option>
+          <option value="Tops">Tops</option>
+          <option value="Bottoms">Bottoms</option>
+          <option value="Outerwear">Outerwear</option>
+          <option value="Accessories">Accessories</option>
+          <option value="Shoes">Shoes</option>
+          <option value="Jewelry">Jewelry</option>
+          <option value="Activewear">Activewear</option>
+          <option value="Swimwear">Swimwear</option>
+          <option value="Lingerie">Lingerie</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Image URL</label>
+      <input type="url" id="prodImage" placeholder="https://images.unsplash.com/...">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Sizes (comma separated)</label>
+        <input type="text" id="prodSizes" placeholder="XS, S, M, L, XL">
+      </div>
+      <div class="form-group">
+        <label>Colors (comma separated)</label>
+        <input type="text" id="prodColors" placeholder="Black, Navy, Cream">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Stock Quantity</label>
+        <input type="number" id="prodStock" value="50" min="0">
+      </div>
+      <div class="form-group">
+        <label>SKU</label>
+        <input type="text" id="prodSku" placeholder="e.g. CD-001">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('productModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveProduct()">Save Product</button>
+    </div>
   </div>
+</div>
 
-  <script src="app.js"></script>
+<!-- ORDER DETAIL MODAL -->
+<div class="modal-overlay" id="orderDetailModal">
+  <div class="modal">
+    <h3>Order Detail</h3>
+    <div class="order-detail-grid">
+      <div class="detail-section">
+        <h4>Customer Info</h4>
+        <p id="odCustomerName"></p>
+        <p id="odCustomerEmail"></p>
+        <p id="odCustomerPhone"></p>
+      </div>
+      <div class="detail-section">
+        <h4>Shipping Address</h4>
+        <p id="odAddress"></p>
+      </div>
+    </div>
+    <div class="detail-section" style="margin-top:16px">
+      <h4>Items</h4>
+      <div class="detail-items" id="odItems"></div>
+      <div class="detail-section" style="margin-top:8px">
+        <p id="odShippingMethod" style="font-size:13px;color:var(--text-light)"></p>
+      </div>
+      <div class="order-total"><span>Total</span><span id="odTotal"></span></div>
+    </div>
+    <div class="form-row" style="margin-top:16px">
+      <div class="form-group">
+        <label>Update Status</label>
+        <select id="odStatusSelect">
+          <option value="pending">Pending</option>
+          <option value="processing">Processing</option>
+          <option value="shipped">Shipped</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tracking Number</label>
+        <input type="text" id="odTracking" placeholder="Tracking #">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('orderDetailModal')">Close</button>
+      <button class="btn btn-primary" onclick="updateOrderDetail()">Update</button>
+    </div>
+  </div>
+</div>
+
+<!-- COUPON MODAL -->
+<div class="modal-overlay" id="couponModal">
+  <div class="modal">
+    <h3>Generate Coupon Code</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Discount Type</label>
+        <select id="cpType">
+          <option value="percentage">Percentage (%)</option>
+          <option value="fixed">Fixed Amount ($)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Value</label>
+        <input type="number" id="cpValue" placeholder="20">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Min Order Amount ($)</label>
+        <input type="number" id="cpMinOrder" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label>Max Uses</label>
+        <input type="number" id="cpMaxUses" placeholder="100" value="100">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Custom Code (optional — leave blank for auto-generated)</label>
+      <input type="text" id="cpCustomCode" placeholder="e.g. SUMMER20">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('couponModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveCoupon()">Generate</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
 </body>
 </html>

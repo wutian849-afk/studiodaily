@@ -1,461 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>STUDIO DAILY — Women's Clothing</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    /* ─── RESET & VARIABLES ───────────────────── */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --primary: #9C8B7A;
-      --primary-dark: #7D6F62;
-      --secondary: #D4C5B5;
-      --accent: #4A4A4A;
-      --bg: #FAF8F5;
-      --card: #FFFFFF;
-      --text: #2C2C2C;
-      --text-light: #6B6B6B;
-      --border: #E8E2D9;
-      --radius: 12px;
-      --shadow: 0 2px 16px rgba(0,0,0,0.04);
-    }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-    a { color: inherit; text-decoration: none; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STUDIO DAILY — Women's Clothing</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+:root{--primary:#2C2C2C;--accent:#9C8B7A;--bg:#FAF8F5;--text:#1a1a1a;--text-light:#888;--border:#e8e4e0;--secondary:#D4C5B5}
 
-    /* ─── TYPOGRAPHY ─────────────────────────── */
-    h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; font-weight: 500; line-height: 1.3; }
+/* HEADER */
+.header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0 24px}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1200px;margin:0 auto}
+.header-logo{font-size:16px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--text)}
+.header-nav{display:flex;gap:24px}
+.header-nav a{font-size:12px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;color:var(--text-light);cursor:pointer;transition:color .15s}
+.header-nav a:hover,.header-nav a.active{color:var(--text)}
+.header-actions{display:flex;gap:16px;align-items:center}
+.header-actions a{text-decoration:none;color:var(--text);font-size:14px;cursor:pointer}
+.cart-btn{position:relative;background:none;border:none;font-size:18px;cursor:pointer;color:var(--text)}
+.cart-count{position:absolute;top:-6px;right:-10px;background:var(--primary);color:#fff;font-size:10px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
 
-    /* ─── HEADER ─────────────────────────────── */
-    .header {
-      background: var(--card);
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .header-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 18px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .header-logo {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 22px;
-      font-weight: 600;
-      letter-spacing: 3px;
-      color: var(--text);
-    }
-    .header-logo span { color: var(--primary); }
-    .header-nav {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-    }
-    .header-nav a {
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: var(--text-light);
-      transition: color 0.15s;
-      cursor: pointer;
-    }
-    .header-nav a:hover, .header-nav a.active { color: var(--text); }
-    .header-cart {
-      position: relative;
-      cursor: pointer;
-      font-size: 20px;
-    }
-    .header-cart .count {
-      position: absolute;
-      top: -8px;
-      right: -10px;
-      background: var(--primary);
-      color: white;
-      font-size: 10px;
-      font-weight: 600;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+/* HERO */
+.hero{background:var(--primary);color:#fff;padding:60px 24px;text-align:center}
+.hero h1{font-size:32px;font-weight:300;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
+.hero p{font-size:14px;opacity:.7;letter-spacing:1px}
+.hero .subtitle{font-size:12px;opacity:.5;margin-top:16px;letter-spacing:2px;text-transform:uppercase}
 
-    /* ─── HERO ───────────────────────────────── */
-    .hero {
-      background: linear-gradient(135deg, #F5F0EB 0%, #EDE7E0 100%);
-      padding: 80px 24px 64px;
-      text-align: center;
-    }
-    .hero h1 {
-      font-size: 44px;
-      font-weight: 400;
-      margin-bottom: 12px;
-      letter-spacing: 1px;
-    }
-    .hero p {
-      color: var(--text-light);
-      font-size: 16px;
-      max-width: 480px;
-      margin: 0 auto;
-    }
+/* PRODUCTS SECTION */
+.section{padding:40px 24px;max-width:1200px;margin:0 auto}
+.section-title{font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;color:var(--text-light)}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px}
+.product-card{cursor:pointer;transition:transform .2s}
+.product-card:hover{transform:translateY(-2px)}
+.product-card .image-wrap{position:relative;overflow:hidden;border-radius:12px;background:#f0ece8;aspect-ratio:3/4}
+.product-card .image-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.product-card:hover .image-wrap img{transform:scale(1.03)}
+.product-card .info{padding:12px 0 0}
+.product-card .category{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:4px}
+.product-card h3{font-size:14px;font-weight:500;margin-bottom:4px}
+.product-card .price{font-size:15px;font-weight:600}
+.product-card .colors{font-size:11px;color:var(--text-light);margin-top:2px}
 
-    /* ─── CATEGORY FILTER ────────────────────── */
-    .filter-bar {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 24px 24px 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-    }
-    .filter-btn {
-      padding: 8px 20px;
-      border: 1px solid var(--border);
-      border-radius: 30px;
-      background: var(--card);
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s;
-      color: var(--text-light);
-    }
-    .filter-btn:hover { border-color: var(--primary); color: var(--text); }
-    .filter-btn.active {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: white;
-    }
+/* FILTERS */
+.filters{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.filter-btn{padding:6px 16px;border:1px solid var(--border);border-radius:20px;background:transparent;font-size:12px;cursor:pointer;transition:all .15s;color:var(--text-light);letter-spacing:.5px}
+.filter-btn:hover{border-color:var(--text);color:var(--text)}
+.filter-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
 
-    /* ─── PRODUCT GRID ───────────────────────── */
-    .product-grid {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 28px 24px 64px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 24px;
-    }
-    .product-card {
-      background: var(--card);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
-      cursor: pointer;
-      border: 1px solid var(--border);
-    }
-    .product-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow);
-    }
-    .product-card .image-wrap {
-      position: relative;
-      overflow: hidden;
-      background: #F5F2EE;
-    }
-    .product-card .image-wrap img {
-      width: 100%;
-      height: 340px;
-      object-fit: cover;
-      transition: transform 0.3s;
-    }
-    .product-card:hover .image-wrap img { transform: scale(1.03); }
-    .product-card .badge {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      background: var(--primary);
-      color: white;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 4px;
-    }
-    .product-card .info {
-      padding: 18px 20px 20px;
-    }
-    .product-card .info h3 {
-      font-family: 'Inter', sans-serif;
-      font-size: 15px;
-      font-weight: 500;
-      margin-bottom: 4px;
-    }
-    .product-card .info .category {
-      font-size: 11px;
-      color: var(--text-light);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 6px;
-    }
-    .product-card .info .price {
-      font-size: 17px;
-      font-weight: 600;
-      color: var(--primary-dark);
-    }
-    .product-card .info .colors {
-      font-size: 11px;
-      color: var(--text-light);
-      margin-top: 6px;
-    }
+/* PRODUCT MODAL */
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:200;align-items:center;justify-content:center;overflow-y:auto;padding:20px}
+.modal-overlay.show{display:flex}
+.modal-product{background:var(--bg);border-radius:16px;width:820px;max-width:100%;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.15)}
+.modal-product .modal-img{background:#f0ece8}
+.modal-product .modal-img img{width:100%;height:100%;object-fit:cover;display:block}
+.modal-product .modal-detail{padding:32px}
+.modal-product .modal-category{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:6px}
+.modal-product h2{font-size:20px;font-weight:500;margin-bottom:4px}
+.modal-product .modal-price{font-size:22px;font-weight:700;margin-bottom:16px}
+.modal-product .modal-desc{font-size:13px;line-height:1.6;color:#666;margin-bottom:20px}
+.modal-product .option-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:8px;font-weight:600}
+.modal-product .size-options,.modal-product .color-options{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.size-btn,.color-btn{padding:8px 16px;border:1px solid var(--border);border-radius:6px;background:#fff;cursor:pointer;font-size:13px;transition:all .15s;font-family:inherit}
+.size-btn:hover,.color-btn:hover{border-color:var(--text)}
+.size-btn.selected,.color-btn.selected{background:var(--primary);color:#fff;border-color:var(--primary)}
+.color-btn{display:flex;align-items:center;gap:6px}
+.swatch{width:14px;height:14px;border-radius:50%;display:inline-block;border:1px solid var(--border)}
+.modal-actions{display:flex;gap:10px;margin-top:20px}
+.add-to-cart{flex:1;padding:14px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:background .15s}
+.add-to-cart:hover{background:#444}
+.add-to-cart:disabled{opacity:.4;cursor:not-allowed}
+.close-modal-btn{width:44px;height:44px;border:1px solid var(--border);background:#fff;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
+@media(max-width:700px){.modal-product{grid-template-columns:1fr}.modal-product .modal-img{max-height:300px}}
 
-    /* ─── PRODUCT DETAIL MODAL ──────────────── */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s;
-      padding: 20px;
-    }
-    .modal-overlay.show { opacity: 1; pointer-events: all; }
-    .modal {
-      background: var(--card);
-      border-radius: 16px;
-      max-width: 800px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      display: flex;
-      flex-wrap: wrap;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.2);
-    }
-    .modal-image {
-      flex: 1 1 340px;
-      min-height: 340px;
-      background: #F5F2EE;
-    }
-    .modal-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .modal-content {
-      flex: 1 1 360px;
-      padding: 36px;
-    }
-    .modal-content .close-btn {
-      float: right;
-      background: none;
-      border: none;
-      font-size: 22px;
-      cursor: pointer;
-      color: var(--text-light);
-    }
-    .modal-content h2 {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 24px;
-      font-weight: 500;
-      margin-bottom: 6px;
-    }
-    .modal-content .modal-category {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text-light);
-      margin-bottom: 12px;
-    }
-    .modal-content .modal-price {
-      font-size: 24px;
-      font-weight: 600;
-      color: var(--primary-dark);
-      margin-bottom: 16px;
-    }
-    .modal-content .modal-desc {
-      font-size: 14px;
-      color: var(--text-light);
-      line-height: 1.7;
-      margin-bottom: 20px;
-    }
-    .modal-content .option-label {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
-      color: var(--text);
-    }
-    .modal-content .size-options,
-    .modal-content .color-options {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    .modal-content .size-btn,
-    .modal-content .color-btn {
-      padding: 8px 16px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: var(--card);
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.12s;
-    }
-    .modal-content .size-btn:hover,
-    .modal-content .color-btn:hover { border-color: var(--primary); }
-    .modal-content .size-btn.selected,
-    .modal-content .color-btn.selected {
-      background: var(--text);
-      border-color: var(--text);
-      color: white;
-    }
-    .color-btn {
-      position: relative;
-      padding-left: 32px;
-    }
-    .color-btn .swatch {
-      position: absolute;
-      left: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-    }
-    .modal-content .paypal-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      padding: 14px;
-      background: #FFC439;
-      color: #2C2E2F;
-      border: none;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.15s;
-      margin-top: 16px;
-    }
-    .modal-content .paypal-btn:hover { opacity: 0.9; }
-    .modal-content .paypal-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
+/* CART DRAWER */
+.cart-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:300}
+.cart-overlay.show{display:block}
+.cart-drawer{position:fixed;top:0;right:0;width:420px;max-width:100vw;height:100vh;background:var(--bg);z-index:301;box-shadow:-4px 0 24px rgba(0,0,0,0.08);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .25s}
+.cart-overlay.show .cart-drawer{transform:translateX(0)}
+.cart-header{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--border)}
+.cart-header h3{font-size:14px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.cart-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text)}
+.cart-items{flex:1;overflow-y:auto;padding:16px 24px}
+.cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.cart-item img{width:60px;height:80px;object-fit:cover;border-radius:6px;background:#f0ece8}
+.cart-item .item-info{flex:1}
+.cart-item .item-name{font-size:13px;font-weight:500}
+.cart-item .item-meta{font-size:11px;color:var(--text-light);margin:2px 0}
+.cart-item .item-price{font-size:14px;font-weight:600}
+.cart-item .item-qty{display:flex;align-items:center;gap:8px;margin-top:4px}
+.cart-item .item-qty button{width:26px;height:26px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;font-size:14px}
+.cart-item .item-qty span{font-size:13px;min-width:20px;text-align:center}
+.cart-item .remove-item{font-size:16px;color:var(--text-light);cursor:pointer;background:none;border:none;align-self:flex-start;padding:4px}
+.cart-item .remove-item:hover{color:var(--text)}
+.cart-footer{padding:16px 24px 24px;border-top:1px solid var(--border)}
+.cart-subtotal{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
+.cart-total{display:flex;justify-content:space-between;font-size:16px;font-weight:700;margin:10px 0 16px;padding-top:10px;border-top:2px solid var(--primary)}
+.cart-empty{text-align:center;padding:40px 20px;color:var(--text-light)}
+.checkout-btn{width:100%;padding:14px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
+.checkout-btn:hover{background:#444}
+.checkout-btn:disabled{opacity:.4;cursor:not-allowed}
+.free-ship-msg{font-size:11px;color:var(--success);text-align:center;margin-top:8px}
 
-    /* ─── FOOTER ─────────────────────────────── */
-    .footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 24px;
-      text-align: center;
-      font-size: 12px;
-      color: var(--text-light);
-      max-width: 1280px;
-      margin: 0 auto;
-    }
+/* CHECKOUT PAGE */
+.checkout-page{display:none;min-height:100vh;background:#f5f5f5;padding:40px 24px}
+.checkout-page.show{display:block}
+.checkout-inner{max-width:720px;margin:0 auto}
+.checkout-title{margin-bottom:24px}
+.checkout-title h2{font-size:20px;font-weight:600}
+.checkout-title a{font-size:13px;color:var(--text-light);text-decoration:none;cursor:pointer}
+.checkout-card{background:#fff;border-radius:12px;padding:24px 28px;margin-bottom:20px;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.checkout-card h3{font-size:14px;font-weight:600;margin-bottom:16px}
+.checkout-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.checkout-field{margin-bottom:12px}
+.checkout-field label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-light);font-weight:600;margin-bottom:4px}
+.checkout-field input,.checkout-field select{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;font-size:14px;outline:none;font-family:inherit}
+.checkout-field input:focus,.checkout-field select:focus{border-color:var(--primary)}
+.checkout-summary-item{display:flex;justify-content:space-between;padding:6px 0;font-size:13px}
+.checkout-total{display:flex;justify-content:space-between;font-size:18px;font-weight:700;margin-top:12px;padding-top:12px;border-top:2px solid var(--primary)}
+.pay-btn{width:100%;padding:16px;background:#0070ba;color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;margin-top:16px;transition:background .15s}
+.pay-btn:hover{background:#005ea6}
+.pay-btn:disabled{opacity:.5;cursor:not-allowed}
+.coupon-input{display:flex;gap:8px;margin-bottom:12px}
+.coupon-input input{flex:1;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;outline:none}
+.coupon-input button{padding:8px 16px;background:var(--primary);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px}
+.coupon-applied{font-size:12px;color:var(--success);margin-bottom:8px}
 
-    /* ─── RESPONSIVE ────────────────────────── */
-    @media (max-width: 768px) {
-      .header-inner { padding: 14px 16px; }
-      .header-logo { font-size: 18px; letter-spacing: 2px; }
-      .header-nav { gap: 16px; }
-      .header-nav a { font-size: 11px; letter-spacing: 0.5px; }
-      .hero { padding: 48px 16px 40px; }
-      .hero h1 { font-size: 28px; }
-      .product-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; padding: 16px 12px 40px; }
-      .product-card .image-wrap img { height: 220px; }
-      .product-card .info { padding: 12px 14px; }
-      .product-card .info h3 { font-size: 13px; }
-      .product-card .info .price { font-size: 15px; }
-      .modal { flex-direction: column; }
-      .modal-image { flex: none; min-height: 280px; }
-      .modal-content { padding: 24px; }
-    }
-  </style>
+/* THANK YOU */
+.thankyou-page{display:none;min-height:100vh;background:#f5f5f5;padding:80px 24px;text-align:center}
+.thankyou-page.show{display:block}
+.thankyou-icon{font-size:48px;margin-bottom:16px}
+.thankyou-page h2{font-size:24px;font-weight:600;margin-bottom:8px}
+.thankyou-page p{color:var(--text-light);font-size:14px;margin-bottom:4px}
+.thankyou-page .order-num{font-size:16px;font-weight:700;margin:12px 0}
+.thankyou-page .btn-continue{display:inline-block;margin-top:24px;padding:12px 32px;background:var(--primary);color:#fff;text-decoration:none;border-radius:8px;font-size:14px}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .header-nav{display:none}
+  .product-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .checkout-row{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="header-inner">
-      <div class="header-logo">STUDIO <span>DAILY</span></div>
-      <nav class="header-nav">
-        <a class="active" onclick="filterProducts('all')" data-cat="all">All</a>
-        <a onclick="filterProducts('Dresses')" data-cat="Dresses">Dresses</a>
-        <a onclick="filterProducts('Tops')" data-cat="Tops">Tops</a>
-        <a onclick="filterProducts('Bottoms')" data-cat="Bottoms">Bottoms</a>
-        <a onclick="filterProducts('Outerwear')" data-cat="Outerwear">Outerwear</a>
-      </nav>
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="header-logo" onclick="showHome()" id="storeLogo">STUDIO DAILY</a>
+    <nav class="header-nav" id="headerNav"></nav>
+    <div class="header-actions">
+      <button class="cart-btn" onclick="openCart()">🛒<span class="cart-count" id="cartCount">0</span></button>
     </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="hero">
-    <h1>Effortless Style, Everyday</h1>
-    <p>Curated women's essentials designed for the modern wardrobe. Timeless pieces crafted with intention.</p>
-  </section>
-
-  <!-- FILTER BAR (Mobile friendly) -->
-  <div class="filter-bar" id="filterBar">
-    <button class="filter-btn active" onclick="filterProducts('all')">All</button>
-    <button class="filter-btn" onclick="filterProducts('Dresses')">Dresses</button>
-    <button class="filter-btn" onclick="filterProducts('Tops')">Tops</button>
-    <button class="filter-btn" onclick="filterProducts('Bottoms')">Bottoms</button>
-    <button class="filter-btn" onclick="filterProducts('Outerwear')">Outerwear</button>
   </div>
+</header>
 
-  <!-- PRODUCT GRID -->
-  <div class="product-grid" id="productGrid">
-    <!-- Rendered by JS -->
-  </div>
+<!-- HERO -->
+<section class="hero" id="heroSection">
+  <h1>STUDIO DAILY</h1>
+  <p>Women's Clothing & Accessories</p>
+  <div class="subtitle">Free shipping on orders over $50</div>
+</section>
 
-  <!-- PRODUCT DETAIL MODAL -->
-  <div class="modal-overlay" id="productModal">
-    <div class="modal">
-      <div class="modal-image" id="modalImageWrap">
-        <img id="modalImage" src="" alt="" />
+<!-- PRODUCTS -->
+<section class="section" id="productSection">
+  <div class="filters" id="filterBar"></div>
+  <div class="product-grid" id="productGrid"></div>
+</section>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="productModal" onclick="if(event.target===this)closeProductModal()">
+  <div class="modal-product">
+    <div class="modal-img"><img id="modalImage" src="" alt=""></div>
+    <div class="modal-detail">
+      <div class="modal-category" id="modalCategory"></div>
+      <h2 id="modalName"></h2>
+      <div class="modal-price" id="modalPrice"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="option-label">Size</div>
+      <div class="size-options" id="sizeOptions"></div>
+      <div class="option-label">Color</div>
+      <div class="color-options" id="colorOptions"></div>
+      <div class="option-label">Quantity</div>
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px">
+        <button class="size-btn" onclick="changeQty(-1)">−</button>
+        <span id="modalQty" style="font-size:16px;font-weight:600;min-width:30px;text-align:center">1</span>
+        <button class="size-btn" onclick="changeQty(1)">+</button>
       </div>
-      <div class="modal-content">
-        <button class="close-btn" onclick="closeProductModal()">&times;</button>
-        <h2 id="modalName"></h2>
-        <div class="modal-category" id="modalCategory"></div>
-        <div class="modal-price" id="modalPrice"></div>
-        <div class="modal-desc" id="modalDesc"></div>
-
-        <div class="option-label">Size</div>
-        <div class="size-options" id="sizeOptions"></div>
-
-        <div class="option-label">Color</div>
-        <div class="color-options" id="colorOptions"></div>
-
-        <button class="paypal-btn" id="paypalBtn" onclick="paypalBuy()">
-          <span>Buy Now with</span>
-          <svg viewBox="0 0 36 10" width="48" height="14" fill="#2C2E2F"><path d="M5.88 1.62c-.04.2-.06.34-.1.5L5.0 6.1h2.44c.1 0 .2-.02.26-.12.06-.08.04-.18.06-.28l.56-3.58c.02-.1 0-.2-.06-.28-.06-.08-.16-.12-.26-.12H6.0c-.06 0-.12.04-.14.1l.02.8zM9.84 0c-.04.2-.06.34-.1.5L9.0 4.86c-.02.1-.04.2-.1.28-.06.08-.16.12-.26.12H6.22c-.06 0-.12.04-.14.1l-.02.1-.24 1.52c-.02.1 0 .2.06.28.06.08.16.12.26.12h2.12c.1 0 .2-.02.26-.12.06-.08.04-.18.06-.28l.56-3.58c.02-.1 0-.2-.06-.28-.06-.08-.16-.12-.26-.12H8.0c-.06 0-.12.04-.14.1l-.02.8z"/></svg>
-        </button>
+      <div class="modal-actions">
+        <button class="add-to-cart" id="addToCartBtn" onclick="addToCart()">Add to Cart</button>
+        <button class="close-modal-btn" onclick="closeProductModal()">✕</button>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <p>&copy; 2026 STUDIO DAILY. All rights reserved.</p>
-  </footer>
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="if(event.target===this)closeCart()">
+  <div class="cart-drawer">
+    <div class="cart-header">
+      <h3>Shopping Cart</h3>
+      <button class="cart-close" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer" id="cartFooter">
+      <div class="cart-subtotal"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
+      <div class="cart-total"><span>Total</span><span id="cartTotal">$0.00</span></div>
+      <div id="freeShippingMsg" class="free-ship-msg"></div>
+      <button class="checkout-btn" id="checkoutBtn" onclick="goToCheckout()">Checkout</button>
+    </div>
+  </div>
+</div>
 
-  <script src="app.js"></script>
+<!-- CHECKOUT PAGE -->
+<div class="checkout-page" id="checkoutPage">
+  <div class="checkout-inner">
+    <div class="checkout-title">
+      <h2>Checkout</h2>
+      <a onclick="showHome()">← Back to store</a>
+    </div>
+
+    <div class="checkout-card">
+      <h3>Contact Information</h3>
+      <div class="checkout-row">
+        <div class="checkout-field" style="grid-column:1/-1">
+          <label>Email</label>
+          <input type="email" id="coEmail" placeholder="your@email.com">
+        </div>
+        <div class="checkout-field">
+          <label>First Name</label>
+          <input type="text" id="coFirstName" placeholder="First name">
+        </div>
+        <div class="checkout-field">
+          <label>Last Name</label>
+          <input type="text" id="coLastName" placeholder="Last name">
+        </div>
+        <div class="checkout-field">
+          <label>Phone</label>
+          <input type="tel" id="coPhone" placeholder="(555) 123-4567">
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-card">
+      <h3>Shipping Address</h3>
+      <div class="checkout-field">
+        <label>Address Line 1</label>
+        <input type="text" id="coAddr1" placeholder="123 Main Street">
+      </div>
+      <div class="checkout-field">
+        <label>Address Line 2 (optional)</label>
+        <input type="text" id="coAddr2" placeholder="Apt, suite, etc.">
+      </div>
+      <div class="checkout-row">
+        <div class="checkout-field"><label>City</label><input type="text" id="coCity" placeholder="City"></div>
+        <div class="checkout-field"><label>State</label><input type="text" id="coState" placeholder="State"></div>
+        <div class="checkout-field"><label>ZIP Code</label><input type="text" id="coZip" placeholder="12345"></div>
+        <div class="checkout-field"><label>Country</label><select id="coCountry"><option value="US">United States</option><option value="CA">Canada</option><option value="GB">United Kingdom</option><option value="AU">Australia</option><option value="OTHER">Other</option></select></div>
+      </div>
+    </div>
+
+    <div class="checkout-card">
+      <h3>Shipping Method</h3>
+      <div id="shippingOptions"></div>
+      <div style="margin-top:16px">
+        <label style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-light);font-weight:600">Have a coupon code?</label>
+        <div class="coupon-input">
+          <input type="text" id="couponInput" placeholder="Enter code">
+          <button onclick="applyCoupon()">Apply</button>
+        </div>
+        <div id="couponAppliedMsg"></div>
+      </div>
+    </div>
+
+    <div class="checkout-card">
+      <h3>Order Summary</h3>
+      <div id="checkoutItems"></div>
+      <div id="checkoutDiscount" style="display:none" class="checkout-summary-item"><span>Discount</span><span id="discountAmount" style="color:var(--success)">-$0.00</span></div>
+      <div class="checkout-summary-item"><span>Shipping</span><span id="checkoutShipping">Calculated at checkout</span></div>
+      <div class="checkout-total"><span>Total</span><span id="checkoutTotal">$0.00</span></div>
+      <button class="pay-btn" id="payBtn" onclick="placeOrder()">Pay with PayPal</button>
+    </div>
+  </div>
+</div>
+
+<!-- THANK YOU PAGE -->
+<div class="thankyou-page" id="thankyouPage">
+  <div class="thankyou-icon">✅</div>
+  <h2>Order Confirmed!</h2>
+  <p>Thank you for your purchase.</p>
+  <div class="order-num">Order #<span id="thankyouOrderNum"></span></div>
+  <p>You'll receive a confirmation email shortly.</p>
+  <a href="#" class="btn-continue" onclick="showHome()">Continue Shopping</a>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>

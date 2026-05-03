@@ -1,112 +1,49 @@
 {
   "products": [
     {
-      "id": "p1",
-      "name": "Cashmere Blend Wrap Dress",
-      "description": "An elegant wrap dress crafted from a soft cashmere blend. Features a flattering V-neckline and adjustable waist tie for a custom fit. Perfect for office to evening transitions.",
-      "price": 89.00,
-      "image": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&h=800&fit=crop",
-      "category": "Dresses",
-      "sizes": ["XS", "S", "M", "L", "XL"],
-      "colors": ["Charcoal", "Cream", "Black"],
-      "inStock": true,
-      "createdAt": "2026-01-15T10:00:00Z"
+      "id": "p1", "name": "Cashmere Blend Wrap Dress", "description": "An elegant wrap dress crafted from a soft cashmere blend. Features a flattering V-neckline and adjustable waist tie for a custom fit. Perfect for office to evening transitions.",
+      "price": 89.00, "image": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&h=800&fit=crop", "category": "Dresses",
+      "sizes": ["XS", "S", "M", "L", "XL"], "colors": ["Charcoal", "Cream", "Black"], "inStock": true, "stock": 45, "sku": "CD-001", "createdAt": "2026-01-15T10:00:00Z"
     },
     {
-      "id": "p2",
-      "name": "Linen Wide-Leg Trousers",
-      "description": "Effortlessly chic wide-leg trousers in breathable linen. High-waisted silhouette with front pleats and side pockets. A wardrobe essential for warm-weather styling.",
-      "price": 72.00,
-      "image": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600&h=800&fit=crop",
-      "category": "Bottoms",
-      "sizes": ["XS", "S", "M", "L", "XL"],
-      "colors": ["Sand", "Ivory", "Olive"],
-      "inStock": true,
-      "createdAt": "2026-01-16T10:00:00Z"
+      "id": "p2", "name": "Linen Wide-Leg Trousers", "description": "Effortlessly chic wide-leg trousers in breathable linen. High-waisted silhouette with front pleats and side pockets. A wardrobe essential for warm-weather styling.",
+      "price": 72.00, "image": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600&h=800&fit=crop", "category": "Bottoms",
+      "sizes": ["XS", "S", "M", "L", "XL"], "colors": ["Sand", "Ivory", "Olive"], "inStock": true, "stock": 60, "sku": "BT-001", "createdAt": "2026-01-16T10:00:00Z"
     },
     {
-      "id": "p3",
-      "name": "Silk Blouse with Tie Neck",
-      "description": "Luxurious 100% silk blouse featuring a delicate tie-neck detail. Relaxed fit with concealed button placket. Pair with tailored trousers or denim for refined polish.",
-      "price": 95.00,
-      "image": "https://images.unsplash.com/photo-1551044773-49a98103f0d6?w=600&h=800&fit=crop",
-      "category": "Tops",
-      "sizes": ["XS", "S", "M", "L"],
-      "colors": ["Blush", "White", "Navy"],
-      "inStock": true,
-      "createdAt": "2026-01-17T10:00:00Z"
+      "id": "p3", "name": "Silk Blouse with Tie Neck", "description": "Luxurious 100% silk blouse featuring a delicate tie-neck detail. Relaxed fit with concealed button placket. Pair with tailored trousers or denim for refined polish.",
+      "price": 95.00, "image": "https://images.unsplash.com/photo-1551044773-49a98103f0d6?w=600&h=800&fit=crop", "category": "Tops",
+      "sizes": ["XS", "S", "M", "L"], "colors": ["Blush", "White", "Navy"], "inStock": true, "stock": 35, "sku": "TP-001", "createdAt": "2026-01-17T10:00:00Z"
     },
     {
-      "id": "p4",
-      "name": "Tailored Wool Blazer",
-      "description": "A sharply tailored single-breasted blazer in Italian wool. Notched lapels, two-button closure, and interior pockets. The cornerstone of a sophisticated capsule wardrobe.",
-      "price": 148.00,
-      "image": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop",
-      "category": "Outerwear",
-      "sizes": ["XS", "S", "M", "L", "XL"],
-      "colors": ["Black", "Taupe", "Camel"],
-      "inStock": true,
-      "createdAt": "2026-01-18T10:00:00Z"
+      "id": "p4", "name": "Tailored Wool Blazer", "description": "A sharply tailored single-breasted blazer in Italian wool. Notched lapels, two-button closure, and interior pockets. The cornerstone of a sophisticated capsule wardrobe.",
+      "price": 148.00, "image": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop", "category": "Outerwear",
+      "sizes": ["XS", "S", "M", "L", "XL"], "colors": ["Black", "Taupe", "Camel"], "inStock": true, "stock": 25, "sku": "OW-001", "createdAt": "2026-01-18T10:00:00Z"
     },
     {
-      "id": "p5",
-      "name": "Midi A-Line Skirt",
-      "description": "A graceful A-line midi skirt in structured cotton twill. Features a concealed zip back and knee-length slit for ease of movement. Pairs beautifully with tucked-in blouses.",
-      "price": 68.00,
-      "image": "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=600&h=800&fit=crop",
-      "category": "Bottoms",
-      "sizes": ["XS", "S", "M", "L", "XL"],
-      "colors": ["Navy", "Burgundy", "Black"],
-      "inStock": true,
-      "createdAt": "2026-01-19T10:00:00Z"
+      "id": "p5", "name": "Midi A-Line Skirt", "description": "A graceful A-line midi skirt in structured cotton twill. Features a concealed zip back and knee-length slit for ease of movement. Pairs beautifully with tucked-in blouses.",
+      "price": 68.00, "image": "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=600&h=800&fit=crop", "category": "Bottoms",
+      "sizes": ["XS", "S", "M", "L", "XL"], "colors": ["Navy", "Burgundy", "Black"], "inStock": true, "stock": 40, "sku": "BT-002", "createdAt": "2026-01-19T10:00:00Z"
     },
     {
-      "id": "p6",
-      "name": "Cotton Cable Knit Sweater",
-      "description": "A classic cable-knit sweater in soft Pima cotton. Ribbed cuffs and hem with a relaxed crew neckline. The perfect layering piece for cooler days.",
-      "price": 78.00,
-      "image": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&h=800&fit=crop",
-      "category": "Tops",
-      "sizes": ["S", "M", "L", "XL"],
-      "colors": ["Cream", "Heather Grey", "Sage"],
-      "inStock": true,
-      "createdAt": "2026-01-20T10:00:00Z"
+      "id": "p6", "name": "Cotton Cable Knit Sweater", "description": "A classic cable-knit sweater in soft Pima cotton. Ribbed cuffs and hem with a relaxed crew neckline. The perfect layering piece for cooler days.",
+      "price": 78.00, "image": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&h=800&fit=crop", "category": "Tops",
+      "sizes": ["S", "M", "L", "XL"], "colors": ["Cream", "Heather Grey", "Sage"], "inStock": true, "stock": 50, "sku": "TP-002", "createdAt": "2026-01-20T10:00:00Z"
     },
     {
-      "id": "p7",
-      "name": "Pleated Midi Dress",
-      "description": "An ethereal pleated midi dress with delicate spaghetti straps and a flowing silhouette. Made from lightweight crepe with a hidden back zipper. Ideal for garden parties and summer evenings.",
-      "price": 105.00,
-      "image": "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&h=800&fit=crop",
-      "category": "Dresses",
-      "sizes": ["XS", "S", "M", "L"],
-      "colors": ["Dusty Rose", "Lavender", "Mint"],
-      "inStock": true,
-      "createdAt": "2026-01-21T10:00:00Z"
+      "id": "p7", "name": "Pleated Midi Dress", "description": "An ethereal pleated midi dress with delicate spaghetti straps and a flowing silhouette. Made from lightweight crepe with a hidden back zipper. Ideal for garden parties and summer evenings.",
+      "price": 105.00, "image": "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&h=800&fit=crop", "category": "Dresses",
+      "sizes": ["XS", "S", "M", "L"], "colors": ["Dusty Rose", "Lavender", "Mint"], "inStock": true, "stock": 30, "sku": "CD-002", "createdAt": "2026-01-21T10:00:00Z"
     },
     {
-      "id": "p8",
-      "name": "High-Rise Skinny Jeans",
-      "description": "Premium stretch denim with a high-rise waist and skinny leg. Features authentic five-pocket styling with a hint of stretch for all-day comfort. A modern classic.",
-      "price": 82.00,
-      "image": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&h=800&fit=crop",
-      "category": "Bottoms",
-      "sizes": ["24", "25", "26", "27", "28", "29", "30"],
-      "colors": ["Indigo", "Black", "Light Wash"],
-      "inStock": true,
-      "createdAt": "2026-01-22T10:00:00Z"
+      "id": "p8", "name": "High-Rise Skinny Jeans", "description": "Premium stretch denim with a high-rise waist and skinny leg. Features authentic five-pocket styling with a hint of stretch for all-day comfort. A modern classic.",
+      "price": 82.00, "image": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&h=800&fit=crop", "category": "Bottoms",
+      "sizes": ["24", "25", "26", "27", "28", "29", "30"], "colors": ["Indigo", "Black", "Light Wash"], "inStock": true, "stock": 55, "sku": "BT-003", "createdAt": "2026-01-22T10:00:00Z"
     },
     {
-      "id": "p9",
-      "name": "Trench Coat with Belt",
-      "description": "A timeless double-breasted trench coat in water-resistant cotton gabardine. Epaulettes, storm flap, and a self-tie belt define this iconic silhouette. Inseam pockets and gun flap details.",
-      "price": 185.00,
-      "image": "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=600&h=800&fit=crop",
-      "category": "Outerwear",
-      "sizes": ["XS", "S", "M", "L", "XL"],
-      "colors": ["Khaki", "Black", "Stone"],
-      "inStock": true,
-      "createdAt": "2026-01-23T10:00:00Z"
+      "id": "p9", "name": "Trench Coat with Belt", "description": "A timeless double-breasted trench coat in water-resistant cotton gabardine. Epaulettes, storm flap, and a self-tie belt define this iconic silhouette.",
+      "price": 185.00, "image": "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=600&h=800&fit=crop", "category": "Outerwear",
+      "sizes": ["XS", "S", "M", "L", "XL"], "colors": ["Khaki", "Black", "Stone"], "inStock": true, "stock": 20, "sku": "OW-002", "createdAt": "2026-01-23T10:00:00Z"
     }
   ]
 }
