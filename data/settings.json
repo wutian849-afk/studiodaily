@@ -1,0 +1,12 @@
+{
+  "storeName": "STUDIO DAILY",
+  "paypalEmail": "jingm1658@gmail.com",
+  "currency": "USD",
+  "theme": {
+    "primary": "#9C8B7A",
+    "secondary": "#D4C5B5",
+    "accent": "#4A4A4A",
+    "background": "#FAF8F5",
+    "text": "#2C2C2C"
+  }
+}

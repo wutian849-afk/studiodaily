@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studio Daily — Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #9C8B7A;
+      --primary-dark: #7D6F62;
+      --secondary: #D4C5B5;
+      --accent: #4A4A4A;
+      --bg: #FAF8F5;
+      --card: #FFFFFF;
+      --text: #2C2C2C;
+      --text-light: #6B6B6B;
+      --border: #E8E2D9;
+      --danger: #C44A4A;
+      --success: #5B8C5A;
+      --sidebar: #2C2C2C;
+      --sidebar-text: #E8E2D9;
+      --radius: 10px;
+    }
+    html, body { height: 100%; font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); }
+    /* Login */
+    #loginScreen {
+      position: fixed; inset: 0; background: var(--bg); display: flex;
+      align-items: center; justify-content: center; z-index: 1000;
+    }
+    .login-card {
+      background: var(--card); padding: 48px 40px; border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08); width: 360px; max-width: 90vw;
+    }
+    .login-card h1 { font-size: 24px; font-weight: 600; letter-spacing: 1px; margin-bottom: 4px; }
+    .login-card p { color: var(--text-light); font-size: 14px; margin-bottom: 28px; }
+    .login-card input {
+      width: 100%; padding: 14px 16px; border: 1px solid var(--border);
+      border-radius: 8px; font-size: 15px; background: var(--bg); margin-bottom: 16px;
+    }
+    .login-card input:focus { outline: none; border-color: var(--primary); }
+    .login-card button {
+      width: 100%; padding: 14px; background: var(--primary); color: white;
+      border: none; border-radius: 8px; font-size: 15px; font-weight: 500; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .login-card button:hover { background: var(--primary-dark); }
+    .login-error { color: var(--danger); font-size: 13px; margin-top: 12px; text-align: center; display: none; }
+    /* Layout */
+    #app { display: flex; height: 100vh; }
+    .sidebar {
+      width: 240px; background: var(--sidebar); color: var(--sidebar-text);
+      display: flex; flex-direction: column; flex-shrink: 0;
+    }
+    .sidebar-brand {
+      padding: 28px 24px; font-size: 14px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .sidebar-nav { flex: 1; padding: 16px 0; }
+    .sidebar-nav a {
+      display: flex; align-items: center; gap: 12px; padding: 12px 24px;
+      color: var(--sidebar-text); text-decoration: none; font-size: 14px;
+      transition: all 0.15s; cursor: pointer; border: none; background: none; width: 100%;
+      text-align: left;
+    }
+    .sidebar-nav a:hover, .sidebar-nav a.active { background: rgba(255,255,255,0.06); color: white; }
+    .sidebar-nav a.active { border-left: 3px solid var(--secondary); padding-left: 21px; }
+    .sidebar-nav .icon { font-size: 18px; width: 22px; text-align: center; }
+    .main {
+      flex: 1; display: flex; flex-direction: column; overflow: hidden;
+    }
+    .main-header {
+      padding: 20px 32px; background: var(--card); border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .main-header h2 { font-size: 20px; font-weight: 600; }
+    .main-header .user-badge {
+      display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-light);
+    }
+    .main-header .user-badge button {
+      padding: 6px 14px; background: none; border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer; font-size: 13px; color: var(--text-light);
+      transition: all 0.15s;
+    }
+    .main-header .user-badge button:hover { border-color: var(--danger); color: var(--danger); }
+    .main-content {
+      flex: 1; padding: 32px; overflow-y: auto;
+    }
+    .page { display: none; }
+    .page.active { display: block; }
+    /* Cards */
+    .card {
+      background: var(--card); border-radius: var(--radius); border: 1px solid var(--border);
+      padding: 24px; margin-bottom: 20px;
+    }
+    .card-header {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;
+    }
+    .card-header h3 { font-size: 16px; font-weight: 600; }
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px;
+      border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer;
+      border: none; transition: all 0.15s;
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { border-color: var(--primary); }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-danger:hover { background: #A83D3D; }
+    .btn-sm { padding: 6px 12px; font-size: 12px; }
+    /* Table */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th { text-align: left; padding: 12px 16px; border-bottom: 2px solid var(--border); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-light); }
+    td { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    tr:hover td { background: #F7F5F2; }
+    .status-badge {
+      display: inline-block; padding: 3px 10px; border-radius: 20px;
+      font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px;
+    }
+    .status-paid { background: #E1F0E1; color: #3A7D3A; }
+    .status-pending { background: #FFF1E0; color: #B87A30; }
+    .status-shipped { background: #E0E8F5; color: #3A6A9A; }
+    /* Product grid in admin */
+    .product-grid-admin {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;
+    }
+    .product-card-admin {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; transition: box-shadow 0.15s;
+    }
+    .product-card-admin:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .product-card-admin img { width: 100%; height: 180px; object-fit: cover; }
+    .product-card-admin .info { padding: 16px; }
+    .product-card-admin .info h4 { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+    .product-card-admin .info .price { font-size: 15px; font-weight: 600; color: var(--primary); }
+    .product-card-admin .info .meta { font-size: 12px; color: var(--text-light); margin: 4px 0 12px; }
+    .product-card-admin .actions { display: flex; gap: 8px; padding: 0 16px 16px; }
+    /* Modal */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.4); 
+      display: flex; align-items: center; justify-content: center; z-index: 2000;
+      opacity: 0; pointer-events: none; transition: opacity 0.2s;
+    }
+    .modal-overlay.show { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--card); border-radius: 16px; padding: 32px;
+      width: 600px; max-width: 92vw; max-height: 85vh; overflow-y: auto;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+    }
+    .modal h3 { font-size: 18px; margin-bottom: 20px; }
+    .modal .form-row { margin-bottom: 16px; }
+    .modal label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--text-light); }
+    .modal input, .modal textarea, .modal select {
+      width: 100%; padding: 10px 14px; border: 1px solid var(--border);
+      border-radius: 8px; font-size: 14px; background: var(--bg); font-family: inherit;
+    }
+    .modal input:focus, .modal textarea:focus, .modal select:focus { outline: none; border-color: var(--primary); }
+    .modal textarea { min-height: 80px; resize: vertical; }
+    .modal .form-row-inline { display: flex; gap: 12px; }
+    .modal .form-row-inline > * { flex: 1; }
+    .modal .modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
+    /* Settings */
+    .settings-group { margin-bottom: 28px; }
+    .settings-group h4 { font-size: 14px; font-weight: 600; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    /* Stats row */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 20px; text-align: center;
+    }
+    .stat-card .num { font-size: 28px; font-weight: 700; color: var(--primary); }
+    .stat-card .label { font-size: 12px; color: var(--text-light); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px; background: var(--text); color: white;
+      padding: 14px 24px; border-radius: 8px; font-size: 13px; z-index: 9999;
+      opacity: 0; transform: translateY(12px); transition: all 0.3s;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.success { background: var(--success); }
+    .toast.error { background: var(--danger); }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar { width: 60px; }
+      .sidebar-brand { padding: 20px 12px; font-size: 10px; letter-spacing: 1px; overflow: hidden; }
+      .sidebar-nav a { padding: 12px 18px; justify-content: center; }
+      .sidebar-nav a span:not(.icon) { display: none; }
+      .sidebar-nav a.active { border-left: none; border-bottom: 2px solid var(--secondary); padding-left: 18px; }
+      .main-header { padding: 16px; }
+      .main-content { padding: 16px; }
+      .product-grid-admin { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Login Screen -->
+  <div id="loginScreen">
+    <div class="login-card">
+      <h1>STUDIO DAILY</h1>
+      <p>Admin Panel</p>
+      <input type="password" id="loginPassword" placeholder="Enter password" />
+      <button onclick="login()">Sign In</button>
+      <p class="login-error" id="loginError">Incorrect password</p>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- App -->
+  <div id="app" style="display:none;">
+    <nav class="sidebar">
+      <div class="sidebar-brand">Studio Daily</div>
+      <div class="sidebar-nav">
+        <a class="active" onclick="showPage('dashboard')" data-page="dashboard">
+          <span class="icon">📊</span><span>Dashboard</span>
+        </a>
+        <a onclick="showPage('products')" data-page="products">
+          <span class="icon">👗</span><span>Products</span>
+        </a>
+        <a onclick="showPage('orders')" data-page="orders">
+          <span class="icon">📦</span><span>Orders</span>
+        </a>
+        <a onclick="showPage('customers')" data-page="customers">
+          <span class="icon">👤</span><span>Customers</span>
+        </a>
+        <a onclick="showPage('settings')" data-page="settings">
+          <span class="icon">⚙️</span><span>Settings</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="main">
+      <div class="main-header">
+        <h2 id="pageTitle">Dashboard</h2>
+        <div class="user-badge">
+          <span>Admin</span>
+          <button onclick="logout()">Sign Out</button>
+        </div>
+      </div>
+
+      <div class="main-content">
+
+        <!-- Dashboard -->
+        <div class="page active" id="page-dashboard">
+          <div class="stats-row" id="statsRow"></div>
+          <div class="card">
+            <div class="card-header"><h3>Recent Orders</h3></div>
+            <div class="table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th></tr></thead><tbody id="recentOrders"></tbody></table></div>
+          </div>
+        </div>
+
+        <!-- Products -->
+        <div class="page" id="page-products">
+          <div class="card">
+            <div class="card-header">
+              <h3>All Products <span id="productCount" style="font-weight:400;color:var(--text-light);font-size:13px;"></span></h3>
+              <button class="btn btn-primary" onclick="openProductModal()">+ Add Product</button>
+            </div>
+            <div class="product-grid-admin" id="productGrid"></div>
+          </div>
+        </div>
+
+        <!-- Orders -->
+        <div class="page" id="page-orders">
+          <div class="card">
+            <div class="card-header"><h3>All Orders</h3></div>
+            <div class="table-wrap"><table><thead><tr><th>Order #</th><th>Customer</th><th>Email</th><th>Items</th><th>Total</th><th>Status</th><th>Date</th><th>Action</th></tr></thead><tbody id="ordersList"></tbody></table></div>
+          </div>
+        </div>
+
+        <!-- Customers -->
+        <div class="page" id="page-customers">
+          <div class="card">
+            <div class="card-header"><h3>Customers</h3></div>
+            <div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Orders</th><th>Total Spent</th><th>First Order</th></tr></thead><tbody id="customersList"></tbody></table></div>
+          </div>
+        </div>
+
+        <!-- Settings -->
+        <div class="page" id="page-settings">
+          <div class="card">
+            <div class="card-header"><h3>Store Settings</h3></div>
+            <div class="settings-group">
+              <h4>General</h4>
+              <div class="form-row"><label>Store Name</label><input type="text" id="setStoreName" /></div>
+              <div class="form-row"><label>PayPal Email</label><input type="email" id="setPaypalEmail" /></div>
+              <div class="form-row"><label>Currency</label><input type="text" id="setCurrency" value="USD" disabled style="background:#f0ede8;" /></div>
+            </div>
+            <div class="settings-group">
+              <h4>Theme Colors</h4>
+              <div class="form-row-inline">
+                <div class="form-row"><label>Primary</label><input type="color" id="setPrimary" /></div>
+                <div class="form-row"><label>Background</label><input type="color" id="setBg" /></div>
+                <div class="form-row"><label>Text</label><input type="text" id="setText" /></div>
+              </div>
+            </div>
+            <div class="settings-group">
+              <h4>Admin Password</h4>
+              <div class="form-row-inline">
+                <div class="form-row"><label>Current Password</label><input type="password" id="passCurrent" /></div>
+                <div class="form-row"><label>New Password</label><input type="password" id="passNew" /></div>
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Modal -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal">
+      <h3 id="modalTitle">Add Product</h3>
+      <input type="hidden" id="prodId" />
+      <div class="form-row"><label>Product Name</label><input type="text" id="prodName" /></div>
+      <div class="form-row"><label>Description</label><textarea id="prodDesc"></textarea></div>
+      <div class="form-row-inline">
+        <div class="form-row"><label>Price ($)</label><input type="number" step="0.01" id="prodPrice" /></div>
+        <div class="form-row"><label>Category</label><select id="prodCategory"><option>Dresses</option><option>Tops</option><option>Bottoms</option><option>Outerwear</option><option>Accessories</option></select></div>
+      </div>
+      <div class="form-row"><label>Image URL</label><input type="url" id="prodImage" placeholder="https://images.unsplash.com/..." /></div>
+      <div class="form-row-inline">
+        <div class="form-row"><label>Sizes (comma-separated)</label><input type="text" id="prodSizes" placeholder="XS, S, M, L, XL" /></div>
+        <div class="form-row"><label>Colors (comma-separated)</label><input type="text" id="prodColors" placeholder="Black, White, Navy" /></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('productModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="saveProduct()">Save Product</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Status Modal -->
+  <div class="modal-overlay" id="orderModal">
+    <div class="modal">
+      <h3>Update Order Status</h3>
+      <input type="hidden" id="orderEditId" />
+      <div class="form-row"><label>Order Status</label><select id="orderEditStatus"><option>pending</option><option>paid</option><option>shipped</option><option>delivered</option><option>cancelled</option></select></div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('orderModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="updateOrderStatus()">Update</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
