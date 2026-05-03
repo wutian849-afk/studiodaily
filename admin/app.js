@@ -6,12 +6,12 @@
 // ─── CONFIGURATION ─────────────────────────
 // !!! IMPORTANT: Update these with your repo info !!!
 const CONFIG = {
-  owner: 'aming',
+  owner: 'wutian849-afk',
   repo: 'studiodaily',
   branch: 'main',
   adminPassword: 'admin123', // change this!
   // GitHub personal access token (classic) with 'repo' scope
-  token: '' // ← 去 https://github.com/settings/tokens 生成一个 classic token，填到这里
+  token: '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'
 };
 
 const BASE = `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents`;

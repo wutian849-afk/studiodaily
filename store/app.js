@@ -9,9 +9,9 @@ const CONFIG = {
   // Base URL for GitHub Pages raw data
   // Change this to your published GitHub Pages URL
   // e.g., 'https://YOUR_USERNAME.github.io/studio-daily-store'
-  baseUrl: 'https://aming.github.io/studiodaily',
+  baseUrl: 'https://wutian849-afk.github.io/studiodaily',
   // Fallback: try GitHub raw content if baseUrl is empty
-  owner: 'aming',
+  owner: 'wutian849-afk',
   repo: 'studiodaily',
   branch: 'main'
 };
