@@ -540,7 +540,7 @@ async function placeOrder() {
   // Try to save order to GitHub (silently)
   try {
     const ordersUrl = `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/data/orders.json?ref=${CONFIG.branch}`;
-    const token = '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';
+    const token = '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';
     const r = await fetch(ordersUrl, {
       headers: { 'Accept': 'application/vnd.github.v3+json', 'Authorization': `Bearer ${token}` }
     });

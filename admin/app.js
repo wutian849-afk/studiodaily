@@ -8,7 +8,7 @@ const CONFIG = {
   repo: 'studiodaily',
   branch: 'main',
   adminPassword: 'admin123',
-  token: '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'
+  token: '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'
 };
 
 const BASE = `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents`;
